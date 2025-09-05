@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ====== Meta & SEO ====== -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yuvarahul R — Portfolio</title>
+  <meta name="description" content="Portfolio of Yuvarahul R — Student passionate about HTML, CSS, and JavaScript. Projects, skills, education, and contact." />
+  <meta name="theme-color" content="#2233aa" />
+  <meta property="og:title" content="Yuvarahul R — Portfolio" />
+  <meta property="og:description" content="Student portfolio showcasing skills, projects, and achievements." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🧑🏻‍💻</text></svg>">
+
+  <style>
+    /* ====== Design Tokens ====== */
+    :root {
+      --brand: #2233aa;
+      --brand-2: #6c63ff;
+      --brand-dark: #194386;
+      --accent: #aa0491;
+      --bg: #0e0f16;
+      --bg-2: #141627;
+      --text: #e8e8ef;
+      --muted: #b8b9c7;
+      --card: #1d2035;
+      --card-2: #242845;
+      --outline: 1px solid color-mix(in oklab, var(--text) 10%, transparent);
+      --radius: 14px;
+      --shadow: 0 6px 30px rgba(0,0,0,.35);
+      --blur: saturate(180%) blur(8px);
+    }
+    /* Light mode */
+    :root.light {
+      --bg: #fafbff;
+      --bg-2: #ffffff;
+      --text: #111320;
+      --muted: #3f4560;
+      --card: #ffffff;
+      --card-2: #f5f6ff;
+      --shadow: 0 8px 30px rgba(20,20,50,.08);
+    }
+
+    * { box-sizing: border-box }
+    html { scroll-behavior: smooth }
+    body {
+      margin: 0;
+      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 600px at 100% -10%, #aa049122 0, transparent 60%),
+        radial-gradient(900px 500px at -10% 110%, #2233aa22 0, transparent 60%),
+        var(--bg);
+      color: var(--text);
+    }
+    a { color: inherit; text-decoration: none }
+    img { max-width: 100%; display: block }
+    .container { width: min(1100px, 92vw); margin: 0 auto }
+
+    /* ====== Navbar ====== */
+    .navbar {
+      position: sticky; top: 0; z-index: 1000;
+      backdrop-filter: var(--blur);
+      background: color-mix(in oklab, var(--bg-2) 75%, transparent);
+      border-bottom: var(--outline);
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 14px;
+    }
+    .brand {
+      font-weight: 800; letter-spacing: .3px;
+      color: var(--brand-2); margin-right: auto; display: flex; gap: 10px; align-items: center;
+    }
+    .brand .dot { width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(45deg,var(--brand),var(--accent)); box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand) 25%, transparent) }
+    .navlink {
+      padding: 10px 12px; border-radius: 10px; font-weight: 600; color: var(--muted);
+    }
+    .navlink:hover, .navlink.active { background: var(--card-2); color: var(--text) }
+    .right-actions { display: flex; align-items: center; gap: 8px }
+    .toggle {
+      border: var(--outline); background: var(--card-2); border-radius: 10px; padding: 8px 10px; cursor: pointer;
+    }
+
+    /* ====== Sections ====== */
+    section { padding: 64px 0 }
+    .section-card {
+      background: var(--card);
+      border: var(--outline);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(20px, 4vw, 32px);
+    }
+    h1,h2,h3 { margin: 0 0 12px }
+    .eyebrow { letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-size: .84rem }
+
+    /* ====== Hero ====== */
+    .hero {
+      display: grid; grid-template-columns: 1fr; gap: 20px; align-items: center;
+    }
+    @media (min-width: 860px){
+      .hero { grid-template-columns: 1.25fr .75fr }
+    }
+    .title { font-size: clamp(1.8rem, 4vw, 2.4rem); line-height: 1.2 }
+    .lead { color: var(--muted); margin-top: 8px }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 8px }
+    .chip { padding: 6px 10px; border-radius: 999px; background: var(--card-2); border: var(--outline); font-weight: 600; font-size: .9rem }
+    .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px }
+    .btn {
+      border: none; cursor: pointer;
+      padding: 12px 16px; border-radius: 12px; font-weight: 700;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .btn.primary { background: linear-gradient(45deg,var(--brand),var(--brand-2)); color: white }
+    .btn.soft { background: var(--card-2); border: var(--outline) }
+
+    .avatar {
+      width: min(180px, 45vw); aspect-ratio: 1; border-radius: 50%;
+      border: 4px solid color-mix(in oklab, #fff 30%, transparent);
+      margin: 0 auto; object-fit: cover;
+      box-shadow: 0 10px 40px rgba(0,0,0,.35);
+    }
+
+    /* ====== Skills ====== */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 16px }
+    .skill { background: var(--card); border: var(--outline); border-radius: 12px; padding: 16px }
+    .bar { height: 10px; border-radius: 999px; background: color-mix(in oklab, var(--muted) 20%, transparent); overflow: hidden; }
+    .bar > span { display: block; height: 100%; width: var(--w, 70%); background: linear-gradient(90deg,var(--brand),var(--accent)) }
+
+    /* ====== Timeline ====== */
+    .timeline { position: relative; margin-left: 6px }
+    .timeline::before {
+      content: ""; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: color-mix(in oklab, var(--brand) 50%, transparent);
+    }
+    .t-item { position: relative; padding-left: 32px; margin: 18px 0 }
+    .t-item::before {
+      content:""; position:absolute; left: 4px; top: 4px; width: 14px; height: 14px; border-radius: 50%; border: 3px solid var(--bg); background: linear-gradient(45deg,var(--brand),var(--accent)); box-shadow: 0 0 0 3px color-mix(in oklab,var(--brand) 25%, transparent);
+    }
+    .t-meta { font-weight: 700 }
+    .t-sub { color: var(--muted) }
+
+    /* ====== Projects ====== */
+    .filters { display:flex; flex-wrap:wrap; gap:8px; margin-bottom: 12px }
+    .filter { padding: 8px 12px; border-radius: 999px; background: var(--card-2); border: var(--outline); cursor: pointer; font-weight: 700 }
+    .filter.active { background: linear-gradient(45deg,var(--brand),var(--brand-2)); color: #fff; border-color: transparent }
+    .grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 16px }
+    .card {
+      background: var(--card); border: var(--outline); border-radius: 14px;
+      padding: 16px; box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,.35) }
+    .taglist { display:flex; gap:6px; flex-wrap:wrap; margin-top: 8px }
+    .tag { font-size:.8rem; padding:4px 8px; border-radius:999px; background: var(--card-2); border: var(--outline) }
+
+    /* ====== Certificates / Achievements ====== */
+    ul { padding-left: 18px; margin: 8px 0 }
+    li { margin: 6px 0 }
+    .badge { display:inline-block; padding: 4px 8px; border-radius: 999px; background: color-mix(in oklab, var(--brand-2) 20%, transparent); font-weight:700; font-size:.85rem }
+
+    /* ====== Resume ====== */
+    .resume-wrap { display:grid; gap: 12px; align-items:center }
+    .resume-img {
+      width: 100%; max-width: 900px; border-radius: 12px; border: var(--outline); box-shadow: var(--shadow); background: #fff;
+    }
+
+    /* ====== Contact ====== */
+    .contact-grid { display:grid; grid-template-columns: 1fr; gap: 16px }
+    @media (min-width: 860px){ .contact-grid { grid-template-columns: 1.1fr .9fr } }
+    .input { width: 100%; padding: 12px 14px; border-radius: 10px; border: var(--outline); background: var(--bg-2); color: var(--text) }
+    textarea.input { min-height: 120px; resize: vertical }
+    .muted { color: var(--muted) }
+    .contact-cards { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 12px }
+
+    /* ====== Footer & extras ====== */
+    footer { text-align:center; padding: 40px 10px; color: var(--muted) }
+    .fab {
+      position: fixed; right: 18px; bottom: 18px; z-index: 999;
+      border-radius: 50%; width: 48px; height: 48px; display: grid; place-items: center;
+      background: linear-gradient(45deg,var(--brand),var(--accent)); color: white; border: none; box-shadow: var(--shadow); cursor: pointer;
+      opacity: 0; transform: translateY(10px); transition: .2s ease;
+    }
+    .fab.show { opacity: 1; transform: translateY(0) }
+
+    /* ====== Animations ====== */
+    [data-animate] { opacity: 0; transform: translateY(8px); transition: .5s ease }
+    [data-animate].in { opacity: 1; transform: none }
+
+    /* ====== Print Resume only ====== */
+    @media print {
+      nav, .cta, .filters, .contact-grid, .fab, footer { display: none !important }
+      .resume-img { box-shadow: none; border: none }
+      body { background: white }
+    }
+  </style>
+</head>
+<body>
+  <!-- ====== NAV ====== -->
+  <nav class="navbar">
+    <div class="brand container">
+      <span class="dot" aria-hidden="true"></span> <span>Yuvarahul&nbsp;R</span>
+      <div class="right-actions" style="margin-left:auto">
+        <a class="navlink active" href="#home">Home</a>
+        <a class="navlink" href="#skills">Skills</a>
+        <a class="navlink" href="#education">Education</a>
+        <a class="navlink" href="#projects">Projects</a>
+        <a class="navlink" href="#certificates">Certificates</a>
+        <a class="navlink" href="#resume">Resume</a>
+        <a class="navlink" href="#contact">Contact</a>
+        <button id="themeToggle" class="toggle" aria-label="Toggle theme">🌗</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ====== HERO ====== -->
+  <section id="home" class="container">
+    <div class="hero section-card" data-animate>
+      <div>
+        <div class="eyebrow">Student</div>
+        <h1 class="title">Hi, I'm <span style="background:linear-gradient(45deg,var(--brand),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent">Yuvarahul&nbsp;R</span>.</h1>
+        <p class="lead">
+          I build clean, responsive interfaces with HTML, CSS, and JavaScript.
+          I enjoy learning new tech and turning ideas into usable, friendly websites.
+        </p>
+
+        <div class="chips" aria-label="Quick highlights">
+          <span class="chip">HTML • CSS • JavaScript</span>
+          <span class="chip">Chennai, Tamil Nadu</span>
+        </div>
+
+        <div class="cta">
+          <a class="btn primary" href="#projects">🚀 View Projects</a>
+          <a class="btn soft" href="#contact">✉️ Contact Me</a>
+          <a class="btn soft" href="resume.pdf" download>⬇️ Download Resume (PDF)</a>
+        </div>
+      </div>
+      <div>
+        <!-- Use your existing photo file -->
+        <img src="image.jpg" width="10" alt="Portrait of Yuvarahul R" class="avatar" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== SKILLS ====== -->
+  <section id="skills" class="container">
+    <div class="section-card" data-animate>
+      <div class="eyebrow">Skills</div>
+      <h2>Tech I Work With</h2>
+      <p class="muted">Focused on web fundamentals with growing experience in modern tooling.</p>
+      <div class="skills-grid" style="margin-top:14px">
+        <div class="skill">
+          <strong>HTML5</strong>
+          <div class="bar" aria-label="HTML proficiency"><span style="--w: 90%"></span></div>
+          <div class="muted" style="font-size:.9rem;margin-top:6px">Semantic markup, accessibility, forms</div>
+        </div>
+        <div class="skill">
+          <strong>CSS3</strong>
+          <div class="bar"><span style="--w: 85%"></span></div>
+          <div class="muted" style="font-size:.9rem;margin-top:6px">Layouts (Grid/Flex), responsive, animations</div>
+        </div>
+        <div class="skill">
+          <strong>JavaScript</strong>
+          <div class="bar"><span style="--w: 75%"></span></div>
+          <div class="muted" style="font-size:.9rem;margin-top:6px">DOM, fetch, components, ES6+</div>
+        </div>
+        <div class="skill">
+          <strong>Tools</strong>
+          <div class="bar"><span style="--w: 70%"></span></div>
+          <div class="muted" style="font-size:.9rem;margin-top:6px">Git & GitHub, VS Code, Figma (basic)</div>
+        </div>
+      </div>
+      <div class="chips" style="margin-top:12px">
+        <span class="badge">Soft skills: Communication, Teamwork, Problem Solving</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== EDUCATION ====== -->
+  <section id="education" class="container">
+    <div class="section-card" data-animate>
+      <div class="eyebrow">Education</div>
+      <h2>Education Timeline</h2>
+      <div class="timeline">
+        <div class="t-item">
+          <div class="t-meta">Agurchand Manmull Jain College — <span class="t-sub">Meenambakam, Chennai-01</span></div>
+          <div class="t-sub">Bachelor of Science(Computer Science with Artificial Intelligence)• <em>Student</em> <!-- TODO: Add degree/major, year (e.g., 2023–2026) --></div>
+        </div>
+        <div class="t-item">
+          <div class="t-meta">Higher Secondary (HSLC)</div>
+          <div class="t-meta">2023-2024</div>
+          <div class="t-sub"><!-- TODO: Add school name and year --> </div>
+          <div><!-- Optional: percentage / achievements --></div>
+        </div>
+      </div>
+      <div class="chips" style="margin-top:10px">
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== PROJECTS ====== -->
+  <section id="projects" class="container">
+    <div class="section-card" data-animate>
+      <div class="eyebrow">Projects</div>
+      <h2>Things I’ve Built</h2>
+
+      <!-- Filters -->
+      <div class="filters" role="tablist" aria-label="Project filters">
+        <button class="filter active" data-filter="all" role="tab" aria-selected="true">All</button>
+        <button class="filter" data-filter="html">HTML</button>
+        <button class="filter" data-filter="css">CSS</button>
+        <button class="filter" data-filter="js">JavaScript</button>
+      </div>
+
+      <div class="grid" id="projectGrid">
+        <!-- Your existing project -->
+        <article class="card" data-tags="html css js">
+          <header style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+            <h3 style="margin:0">E-learning Website</h3>
+            <a class="chip" href="#" aria-label="View live (add link)">Live</a>
+          </header>
+          <p style="margin:8px 0 0">A responsive front-end for an online learning platform with course cards, search, and interactive UI components.</p>
+          <div class="taglist" aria-label="Tech used">
+            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+          </div>
+          <div class="chips" style="margin-top:8px">
+            <a class="btn soft" href="#" aria-label="View source (add link)">GitHub</a>
+            <button class="btn soft" data-open="modal-el">Preview</button>
+          </div>
+        </article>
+
+        <!-- Placeholder cards you can replace with real ones later -->
+        <article class="card" data-tags="html css">
+          <h3 style="margin:0">Portfolio v1</h3>
+          <p style="margin:8px 0 0">First iteration of my personal site. Improved semantics and accessibility.</p>
+          <div class="taglist"><span class="tag">HTML</span><span class="tag">CSS</span></div>
+        </article>
+
+        <article class="card" data-tags="js">
+          <h3 style="margin:0">Mini JS Apps</h3>
+          <p style="margin:8px 0 0">Collection of small JavaScript widgets (todo, color picker, quiz).</p>
+          <div class="taglist"><span class="tag">JavaScript</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== CERTIFICATES ====== -->
+  <section id="certificates" class="container">
+    <div class="section-card" data-animate>
+      <div class="eyebrow">Certificates</div>
+      <h2>Certifications</h2>
+      <ul>
+        <li><strong>HTML5 Fundamentals</strong></li>
+        <li><strong>CSS3 Advanced</strong></li>
+        <li><strong>JavaScript Essentials</strong></li>
+        <!-- Add more: TODO: Certificate platform + year -->
+      </ul>
+    </div>
+  </section>
+
+<!-- ====== RESUME ====== -->
+  <section id="resume" class="container">
+    <div class="section-card resume-wrap" data-animate>
+      <div class="eyebrow">Resume</div>
+      <h2>One-page Resume</h2>
+      <p class="muted">Click the button below to download the PDF. The image preview is optimized for quick viewing.</p>
+      <div class="cta">
+        <a class="btn primary" href="resume.pdf" download>⬇️ Download PDF</a>
+        <a class="btn soft" href="resume.jpg" download>⬇️ Download JPG</a>
+        <button class="btn soft" onclick="window.print()">🖨️ Print</button>
+      </div>
+      <img class="resume-img" src="resume.jpg" alt="Resume preview of Yuvarahul R" />
+    </div>
+  </section>
+
+  <!-- ====== CONTACT ====== -->
+  <section id="contact" class="container">
+    <div class="section-card" data-animate>
+      <div class="eyebrow">Contact</div>
+      <h2>Let’s Connect</h2>
+
+      <div class="contact-grid">
+        <!-- Form (mailto) -->
+        <form id="contactForm" class="card" style="background:var(--card-2)" aria-label="Contact form">
+          <label for="name">Name</label>
+          <input class="input" id="name" name="name" placeholder="Your name" required />
+          <label for="email">Email</label>
+          <input class="input" id="email" name="email" type="email" placeholder="you@example.com" required />
+          <label for="msg">Message</label>
+          <textarea class="input" id="msg" name="message" placeholder="How can I help?" required></textarea>
+          <div class="cta" style="margin-top:10px">
+            <button class="btn primary" type="submit">Send Email</button>
+            <button class="btn soft" type="reset">Clear</button>
+          </div>
+          <p class="muted" style="margin:8px 0 0; font-size:.9rem">This uses your email app (no data stored).</p>
+        </form>
+
+        <!-- Direct contacts -->
+        <div class="card">
+          <h3>Direct</h3>
+          <div class="contact-cards">
+            <div class="card" style="background:var(--card-2)">
+              <strong>Email</strong>
+              <div class="muted">24ai005@amjaincollege.edu.in</div>
+              <div class="cta" style="margin-top:8px">
+                <a class="btn soft" href="mailto:24ai005@amjaincollege.edu.in">Open Mail</a>
+                <button class="btn soft" data-copy="24ai005@amjaincollege.edu.in">Copy</button>
+              </div>
+            </div>
+            <div class="card" style="background:var(--card-2)">
+              <strong>Phone</strong>
+              <div class="muted">8667509422</div>
+              <div class="cta" style="margin-top:8px">
+                <a class="btn soft" href="tel:+918667509422">Call</a>
+                <a class="btn soft" href="https://wa.me/918667509422" target="_blank" rel="noreferrer">WhatsApp</a>
+                <button class="btn soft" data-copy="8667509433">Copy</button>
+              </div>
+            </div>
+            <div class="card" style="background:var(--card-2)">
+              <strong>Location</strong>
+              <div class="muted">Chennai, Tamil Nadu</div>
+              <div class="cta" style="margin-top:8px">
+                <a class="btn soft" href="https://maps.google.com/?q=Chennai%2C%20Tamil%20Nadu" target="_blank" rel="noreferrer">Open Map</a>
+              </div>
+            </div>
+            <div class="card" style="background:var(--card-2)">
+              <strong>Social</strong>
+              <div class="muted">Add your links</div>
+              <div class="cta" style="margin-top:8px">
+                <a class="btn soft" href="#" aria-label="https://github.com/Yuvarahul">GitHub</a>
+                <a class="btn soft" href="#" aria-label="LinkedIn link">LinkedIn</a>
+                <a class="btn soft" href="#" aria-label="Portfolio link">Website</a>
+              </div>
+            </div>
+          </div>
+          <p class="muted" style="margin-top:10px;font-size:.9rem">
+            Tip: include a professional email signature and keep GitHub pinned projects updated.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="yr"></span> Yuvarahul R • All rights reserved • <span class="muted">Last updated <span id="updated"></span></span>
+  </footer>
+
+  <!-- Back-to-top FAB -->
+  <button class="fab" id="toTop" aria-label="Back to top">↑</button>
+
+  <!-- ====== Modal (project preview) ====== -->
+  <dialog id="modal-el" style="max-width:min(900px,92vw);border:none;padding:0;border-radius:16px;overflow:hidden">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--card-2);border-bottom:var(--outline)">
+      <strong>E-learning Website — Preview</strong>
+      <form method="dialog"><button class="btn soft">Close</button></form>
+    </div>
+    <div style="padding:16px;background:var(--card)">
+      <p class="muted" style="margin:0 0 10px">Embed screenshots, demo GIF, or a short description here.</p>
+      <!-- TODO: Replace the placeholder image below with a real screenshot -->
+      <img src="photo.jpg" alt="Project placeholder (replace with E-learning screenshot)" style="border-radius:12px" />
+    </div>
+  </dialog>
+
+  <script>
+    // ====== Utilities ======
+    const $ = (sel, ctx=document) => ctx.querySelector(sel);
+    const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+
+    // Year + last updated
+    $('#yr').textContent = new Date().getFullYear();
+    $('#updated').textContent = new Intl.DateTimeFormat(undefined,{year:'numeric',month:'long'}).format(new Date());
+
+    // ====== Theme toggle (persist to localStorage) ======
+    const root = document.documentElement;
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') root.classList.add('light');
+
+    $('#themeToggle').addEventListener('click', () => {
+      root.classList.toggle('light');
+      localStorage.setItem('theme', root.classList.contains('light') ? 'light' : 'dark');
+    });
+
+    // ====== Active link on scroll ======
+    const links = $$('.navlink');
+    const sections = links.map(a => $(a.getAttribute('href'))).filter(Boolean);
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = '#' + entry.target.id;
+          links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === id));
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+    sections.forEach(sec => io.observe(sec));
+
+    // ====== Entrance animations ======
+    const ro = new IntersectionObserver(es => {
+      es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in') })
+    }, { threshold: .12 });
+    $$('[data-animate]').forEach(n => ro.observe(n));
+
+    // ====== Project filtering ======
+    const filters = $$('.filter');
+    const cards = $$('#projectGrid .card');
+    filters.forEach(f => f.addEventListener('click', () => {
+      filters.forEach(x => x.classList.remove('active'));
+      f.classList.add('active');
+      const val = f.dataset.filter;
+      cards.forEach(card => {
+        const match = val === 'all' || (card.dataset.tags || '').includes(val);
+        card.style.display = match ? '' : 'none';
+      });
+    }));
+
+    // ====== Contact form (mailto) ======
+    $('#contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = $('#name').value.trim();
+      const email = $('#email').value.trim();
+      const message = $('#msg').value.trim();
+      if (!name || !email || !message) return alert('Please fill all fields.');
+      const subject = encodeURIComponent(`Portfolio Inquiry from ${name}`);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+      window.location.href = `mailto:24ai005@amjaincollege.edu.in?subject=${subject}&body=${body}`;
+    });
+
+    // ====== Copy to clipboard ======
+    $$('[data-copy]').forEach(btn => btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy);
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 1200);
+      } catch {
+        alert('Copy failed, please copy manually.');
+      }
+    }));
+
+    // ====== Back to top FAB ======
+    const fab = $('#toTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 600) fab.classList.add('show'); else fab.classList.remove('show');
+    });
+    fab.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+
+    // ====== Modal openers ======
+    $$('[data-open]').forEach(b => b.addEventListener('click', () => {
+      const id = b.getAttribute('data-open');
+      const dlg = document.getElementById(id);
+      if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
+      else alert('Your browser does not support dialog preview.');
+    }));
+
+    // ====== Accessibility: reduce motion respect ======
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('[data-animate]').forEach(n => n.classList.add('in'));
+    }
+  </script>
+</body>
+</html>
